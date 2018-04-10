@@ -1,0 +1,35 @@
+<?xml version="1.0" encoding="utf-8" standalone="no" ?>
+<modDesc descVersion="37">
+    <author>Realismus Modding</author>
+    <contributors>reallogger</contributors>
+    <version>1.0.0.0</version>
+    <title>
+        <en>Grazing Animals</en>
+        <de>Grazing Animals</de>
+        <fr>Grazing Animals</fr>
+    </title>
+
+    <description>
+        <en><![CDATA[Grazing Animals]]></en>
+        <de><![CDATA[Grazing Animals]]></de>
+        <fr><![CDATA[Grazing Animals]]></fr>
+    </description>
+
+    <iconFilename>icon.dds</iconFilename>
+    <multiplayer supported="true"/>
+
+    <extraSourceFiles>
+        <sourceFile filename="src/grazingArea.lua" />
+        <sourceFile filename="src/grazingManager.lua" />
+    </extraSourceFiles>
+
+    <l10n>
+        <texts>
+            <text name="GA_SAVE_FAILED" text="Failed to save settings for grazingAnimals to your savegame." />
+        </texts>
+    </l10n>
+
+    <storeItems>
+    </storeItems>
+</modDesc>
+
