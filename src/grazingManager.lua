@@ -43,13 +43,14 @@ end
 
 function grazingAnimals:hourChanged()
     -- update available grass if player has for instance mowed grass in the pasture
-    self.grassVolumeStage2["cows"], self.grassVolumeStage3["cows"] = self:getGrassAmounts("cow")
+    self.grassVolumeStage2["cow"], self.grassVolumeStage3["cow"] = self:getGrassAmounts("cow")
     self.grassVolumeStage2["sheep"], self.grassVolumeStage3["sheep"] = self:getGrassAmounts("sheep")
     --logInfo(" | Available = ", self.grassAvailable["cow"] , " | Consumed = ", self.consumedGrass["cow"], " | grassVolumeStage3 = ", self.grassVolumeStage3["cows"], " | grassVolumeStage2 = ", self.grassVolumeStage2["cows"], " | fillLevel = ", self.grassFillLevel["cow"] )    
 end
 
 function grazingAnimals:minuteChanged()
     self:manageGrazing("cow")
+    self:manageGrazing("sheep")
 end
 
 function grazingAnimals:manageGrazing(animalType)
@@ -61,7 +62,7 @@ function grazingAnimals:manageGrazing(animalType)
 
     if self.grassVolumeStage3[animalType] > 0 then
         self.grassAvailable[animalType] = self.grassVolumeStage3[animalType]
-    elseif self.grassVolumeStage2 > 0 then
+    elseif self.grassVolumeStage2[animalType] > 0 then
         self.grassAvailable[animalType] = self.grassVolumeStage2[animalType]
     else
         self.grassAvailable[animalType] = 0
