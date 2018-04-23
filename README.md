@@ -45,6 +45,5 @@ The transform group should have the following structure:
         - corner01_2
         - corner01_3
         
-The grazingAreas transform group need a user attribute onCreate with the value "FS17_RM_grazingAnimals.onCreate"
-
+The grazingAreas transform group (parent) need a user attribute (script callback) onCreate with the value "FS17_RM_grazingAnimals.onCreate". When including the scripts in a map the value needs to be "modOnCreate.grazingArea".
 
