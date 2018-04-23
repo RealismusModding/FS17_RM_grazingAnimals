@@ -173,6 +173,7 @@ function grazingAnimals:reduceGrassAmounts(animalType, state)
     local minState = FruitUtil.fruitIndexToDesc[FruitUtil.FRUITTYPE_GRASS].minHarvestingGrowthState
     local maxState = FruitUtil.fruitIndexToDesc[FruitUtil.FRUITTYPE_GRASS].maxHarvestingGrowthState
     local size = g_currentMission.terrainSize
+    local corners = grazingArea.areas[animalType]
 
     setDensityMaskParams(maskId, "equals", 1)
     setDensityCompareParams(fruitId, "equals", state)
