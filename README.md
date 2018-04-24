@@ -1,6 +1,6 @@
 # FS17_RM_grazingAnimals
 
-Let your sheep and cows enjoy the meadows so they can graze freely. Grass throughs will be filled automatically every hour as long as grass exists in the meadow.
+Let your sheep and cows graze freely in the pastures to enjoy fresh grass. Grass throughs will be filled automatically every hour as long as grass exists in the meadow. When walking in the sheep and cow pastures the available grass will be shown in the top left menu.
 
 This mod requires map preparation.
 
