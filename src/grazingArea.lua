@@ -44,4 +44,7 @@ function grazingArea:new(id)
     return self
 end
 
+function grazingArea:delete()
+end
+
 g_onCreateUtil.addOnCreateFunction("grazingArea", grazingArea.onCreate)
