@@ -166,7 +166,7 @@ function grazingAnimals:update(dt)
     maskId = getTerrainDetailByName(g_currentMission.terrainRootNode, "grazingSheep")
     a, _, _ = getDensityParallelogram(maskId, x - 2.5, z - 2.5, 5, 0, 0, 5, self.MASK_FIRST_CHANNEL,  self.MASK_NUM_CHANNELS)
     if a > 0 then
-        local grassInField = math.max(math.floor(self.grassAvailable["cow"] - self.consumedGrass["cow"]), 0)
+        local grassInField = math.max(math.floor(self.grassAvailable["sheep"] - self.consumedGrass["sheep"]), 0)
         g_currentMission:addExtraPrintText(g_i18n:getText("GA_SHEEP_PASTURE") .. tostring(grassInField) .. " " .. g_i18n:getText("unit_liter"))
     end
 end
