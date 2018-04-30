@@ -77,7 +77,7 @@ function grazingAnimals:manageGrazing(animalType)
     -- finding how much can be filled
     -- leave one day consumption
     self.grassFillLevel[animalType] = g_currentMission.husbandries[animalType]:getFillLevel(FillUtil.FILLTYPE_GRASS_WINDROW)
-    local deltaFillLevel = (self.grassThroughCapacity[animalType] - grassPerDay) -  self.grassFillLevel[animalType]
+    local deltaFillLevel = math.min((self.grassThroughCapacity[animalType] - grassPerDay) -  self.grassFillLevel[animalType], self.grassAvailable[animalType] - self.consumedGrass[animalType])
     if numAnimals ~= 0 then
         --deltaFillLevel = math.max(math.min(deltaFillLevel, grassPerMinute), 0)
         deltaFillLevel = math.max(deltaFillLevel, 0)
@@ -89,8 +89,6 @@ function grazingAnimals:manageGrazing(animalType)
     end
 
     -- setting new fill level
-    local newFillLevel = self.grassFillLevel[animalType] + deltaFillLevel
-
     if deltaFillLevel ~= 0 then
         g_currentMission.husbandries[animalType]:changeFillLevels(deltaFillLevel, FillUtil.FILLTYPE_GRASS_WINDROW)
     end
@@ -129,7 +127,7 @@ function grazingAnimals:getGrassAmounts(animalType)
 
     local _, grassArea3 , _ = getDensityMaskedParallelogram(
         fruitId,
-        corners.corner1X, corners.corner1Z, corners.dX1, 0, 0, corners.dZ2,
+        corners.corner1X, corners.corner1Z, corners.dX1, corners.dZ1, corners.dX2, corners.dZ2,
         0, g_currentMission.numFruitStateChannels,
         maskId,
         self.MASK_FIRST_CHANNEL,  self.MASK_NUM_CHANNELS)
@@ -138,7 +136,7 @@ function grazingAnimals:getGrassAmounts(animalType)
 
     local _, grassArea2 , _ = getDensityMaskedParallelogram(
         fruitId,
-        corners.corner1X, corners.corner1Z, corners.dX1, 0, 0, corners.dZ2,
+        corners.corner1X, corners.corner1Z, corners.dX1, corners.dZ1, corners.dX2, corners.dZ2,
         0, g_currentMission.numFruitStateChannels,
         maskId,
         self.MASK_FIRST_CHANNEL,  self.MASK_NUM_CHANNELS)
@@ -146,7 +144,7 @@ function grazingAnimals:getGrassAmounts(animalType)
     setDensityMaskParams(maskId, "greater", -1)
     setDensityCompareParams(fruitId, "greater", -1)
    
-    return grassArea2 * pixelSize * grassLitersPerSqm * 0.5, grassArea3 * pixelSize * grassLitersPerSqm * 0.25
+    return grassArea2 * pixelSize * grassLitersPerSqm * 0.0417, grassArea3 * pixelSize * grassLitersPerSqm * 0.125
 end
 
 function grazingAnimals:update(dt)
@@ -197,7 +195,7 @@ function grazingAnimals:reduceGrassAmounts(animalType, state)
 
     addDensityMaskedParallelogram(
         fruitId,
-        corners.corner1X, corners.corner1Z, corners.dX1, 0, 0, corners.dZ2,
+        corners.corner1X, corners.corner1Z, corners.dX1, corners.dZ1, corners.dX2, corners.dZ2,
         0, g_currentMission.numFruitStateChannels,
         maskId,
         self.MASK_FIRST_CHANNEL,  self.MASK_NUM_CHANNELS,

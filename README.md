@@ -19,7 +19,8 @@ Under `<Materials>` include:
       <CustomParameter name="alphaBlendStartEnd" value="70 75 0 0"/>
       <CustomParameter name="cellSizeTerrainSizeScaleXZScaleY" value="16 1024 2 255"/>
     </Material>
-  
+
+The customShaderId should be pointing to the windrowFoliageShader.xml
 Under `<Layers>` include:
 
     <FoliageMultiLayer densityMapId="127" numChannels="5" numTypeIndexChannels="0">
@@ -29,7 +30,7 @@ Under `<Layers>` include:
     </FoliageMultiLayer>
 
 ## Painting the grass areas in Giants Editor
-After including the above, the grazingCows and grazingSheep foliage layer will be visible under Terrain Editing in GE. Paint the cow and sheep meadows with the respective layers. In order to see the layers on the screen, change viewDistance to a higher value than 0, for instance to 80.
+After including the above, the grazingCows and grazingSheep foliage layer will be visible under Terrain Editing in GE. Paint the cow and sheep meadows with the respective layers. In order to see the layers on the screen, change viewDistance to a higher value than 0, for instance to 80. Paint grazingCows with channel 0 and grazingSheep with channel 1.
 
 ## Creating a transform group to improve performance
 Create a transform group on the root called "grazingAreas". In the next level include two groups called "sheep" and "cow". Within each group there should be a parallelogram (as they are defined for field defs) that encompass the respective painted areas. It is useful to create the parallelograms under the "fields" transformGroup so their visible extent can be seen on screen.
@@ -45,5 +46,5 @@ The transform group should have the following structure (make sure the parent an
         - corner01_2
         - corner01_3
         
-The grazingAreas transform group (parent) need a user attribute (script callback) onCreate with the value "FS17_RM_grazingAnimals.onCreate". When including the scripts in a map the value needs to be "modOnCreate.grazingArea".
+The grazingAreas transform group (parent) need a user attribute (script callback) named "onCreate" with the value "FS17_RM_grazingAnimals.onCreate". When including the scripts in a map the value needs to be "modOnCreate.grazingArea".
 

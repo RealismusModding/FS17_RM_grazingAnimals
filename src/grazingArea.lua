@@ -36,8 +36,8 @@ function grazingArea:new(id)
 
             grazingArea.areas[animalType] = {}
             grazingArea.areas[animalType].corner1X, _, grazingArea.areas[animalType].corner1Z = getWorldTranslation(corner1Id)
-            grazingArea.areas[animalType].dX1, _ , _ = getTranslation(corner2Id)
-            _, _ , grazingArea.areas[animalType].dZ2 = getTranslation(corner3Id)
+            grazingArea.areas[animalType].dX1, _ , grazingArea.areas[animalType].dZ1 = getTranslation(corner2Id)
+            grazingArea.areas[animalType].dX2, _ , grazingArea.areas[animalType].dZ2 = getTranslation(corner3Id)
         end
     end
 
