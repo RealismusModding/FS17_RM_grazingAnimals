@@ -61,7 +61,7 @@ function grazingAnimals:manageGrazing(animalType)
     end
 
     if self.grassVolumeStage3[animalType] > 0 then
-        self.grassAvailable[animalType] = self.grassVolumeStage3[animalType] * 2 + self.grassVolumeStage2[animalType]
+        self.grassAvailable[animalType] = self.grassVolumeStage3[animalType] + self.grassVolumeStage2[animalType]
     elseif self.grassVolumeStage2[animalType] > 0 then
         self.grassAvailable[animalType] = self.grassVolumeStage2[animalType]
     else
@@ -144,7 +144,7 @@ function grazingAnimals:getGrassAmounts(animalType)
     setDensityMaskParams(maskId, "greater", -1)
     setDensityCompareParams(fruitId, "greater", -1)
    
-    return grassArea2 * pixelSize * grassLitersPerSqm * 0.0417, grassArea3 * pixelSize * grassLitersPerSqm * 0.125
+    return grassArea2 * pixelSize * grassLitersPerSqm * 0.6, grassArea3 * pixelSize * grassLitersPerSqm * 0.4
 end
 
 function grazingAnimals:update(dt)
