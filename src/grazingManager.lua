@@ -68,9 +68,17 @@ function grazingAnimals:manageGrazing(animalType)
         self.grassAvailable[animalType] = 0
     end
 
-    self.grassThroughCapacity[animalType] = g_currentMission.husbandries[animalType]:getCapacity(FillUtil.FILLTYPE_GRASS_WINDROW)
-    local foodPerDay = g_currentMission.husbandries[animalType].animalDesc.foodPerDay
     local numAnimals = g_currentMission.husbandries[animalType].totalNumAnimals
+    local grassCap = g_currentMission.husbandries[animalType]:getCapacity(FillUtil.FILLTYPE_GRASS_WINDROW)
+    
+    -- vanilla has same through capacity for less than 15 animals
+    if numAnimals < 15 then
+        self.grassThroughCapacity[animalType] = grassCap * numAnimals / 15
+    else
+        self.grassThroughCapacity[animalType] = grassCap
+    end
+    
+    local foodPerDay = g_currentMission.husbandries[animalType].animalDesc.foodPerDay
     local weight = FillUtil.fillTypeToFoodGroup[g_currentMission.husbandries[animalType].animalDesc.index][FillUtil.FILLTYPE_GRASS_WINDROW].weight
     local grassPerDay = foodPerDay * numAnimals * weight
 
@@ -146,7 +154,7 @@ function grazingAnimals:getGrassAmounts(animalType)
     setDensityMaskParams(maskId, "greater", -1)
     setDensityCompareParams(fruitId, "greater", -1)
    
-    return grassArea2 * pixelSize * grassLitersPerSqm * 0.5, grassArea3 * pixelSize * grassLitersPerSqm * 0.25
+    return grassArea2 * pixelSize * grassLitersPerSqm * 0.25, grassArea3 * pixelSize * grassLitersPerSqm * 0.25
 end
 
 function grazingAnimals:update(dt)
