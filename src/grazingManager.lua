@@ -146,7 +146,7 @@ function grazingAnimals:getGrassAmounts(animalType)
     setDensityMaskParams(maskId, "greater", -1)
     setDensityCompareParams(fruitId, "greater", -1)
    
-    return grassArea2 * pixelSize * grassLitersPerSqm / 0.5, grassArea3 * pixelSize * grassLitersPerSqm / 0.25
+    return grassArea2 * pixelSize * grassLitersPerSqm * 0.5, grassArea3 * pixelSize * grassLitersPerSqm * 0.25
 end
 
 function grazingAnimals:update(dt)
