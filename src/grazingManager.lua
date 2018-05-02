@@ -61,7 +61,7 @@ function grazingAnimals:manageGrazing(animalType)
     end
 
     if self.grassVolumeStage3[animalType] > 0 then
-        self.grassAvailable[animalType] = self.grassVolumeStage3[animalType] * 2 + self.grassVolumeStage2[animalType]
+        self.grassAvailable[animalType] = self.grassVolumeStage3[animalType] + self.grassVolumeStage2[animalType]
     elseif self.grassVolumeStage2[animalType] > 0 then
         self.grassAvailable[animalType] = self.grassVolumeStage2[animalType]
     else
