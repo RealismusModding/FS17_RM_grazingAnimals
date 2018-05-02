@@ -81,6 +81,8 @@ function grazingAnimals:manageGrazing(animalType)
     if numAnimals ~= 0 then
         --deltaFillLevel = math.max(math.min(deltaFillLevel, grassPerMinute), 0)
         deltaFillLevel = math.max(deltaFillLevel, 0)
+    else
+        deltaFillLevel = 0
     end
     
     if  self.grassAvailable[animalType] == 0 then
@@ -144,7 +146,7 @@ function grazingAnimals:getGrassAmounts(animalType)
     setDensityMaskParams(maskId, "greater", -1)
     setDensityCompareParams(fruitId, "greater", -1)
    
-    return grassArea2 * pixelSize * grassLitersPerSqm * 0.0417, grassArea3 * pixelSize * grassLitersPerSqm * 0.125
+    return grassArea2 * pixelSize * grassLitersPerSqm / 0.5, grassArea3 * pixelSize * grassLitersPerSqm / 0.25
 end
 
 function grazingAnimals:update(dt)
