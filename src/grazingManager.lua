@@ -25,6 +25,8 @@ grazingAnimals.consumedGrass = {}
 grazingAnimals.grassVolumeStage2 = {}
 grazingAnimals.grassVolumeStage3 = {}
 
+grazingAnimals.GRASS_MULTIPLIER = 0.25 -- 0.25 gives approximately the same amount as if you would mow the grass area.
+
 local modItem = ModsUtil.findModItemByModName(g_currentModName)
 grazingAnimals.modDir = g_currentModDirectory
 
@@ -45,7 +47,6 @@ function grazingAnimals:hourChanged()
     -- update available grass if player has for instance mowed grass in the pasture
     self.grassVolumeStage2["cow"], self.grassVolumeStage3["cow"] = self:getGrassAmounts("cow")
     self.grassVolumeStage2["sheep"], self.grassVolumeStage3["sheep"] = self:getGrassAmounts("sheep")
-    --logInfo(" | Available = ", self.grassAvailable["cow"] , " | Consumed = ", self.consumedGrass["cow"], " | grassVolumeStage3 = ", self.grassVolumeStage3["cow"], " | grassVolumeStage2 = ", self.grassVolumeStage2["cow"], " | fillLevel = ", self.grassFillLevel["cow"] )    
 end
 
 function grazingAnimals:minuteChanged()
@@ -87,7 +88,6 @@ function grazingAnimals:manageGrazing(animalType)
     self.grassFillLevel[animalType] = g_currentMission.husbandries[animalType]:getFillLevel(FillUtil.FILLTYPE_GRASS_WINDROW)
     local deltaFillLevel = math.min((self.grassThroughCapacity[animalType] - grassPerDay) -  self.grassFillLevel[animalType], self.grassAvailable[animalType] - self.consumedGrass[animalType])
     if numAnimals ~= 0 then
-        --deltaFillLevel = math.max(math.min(deltaFillLevel, grassPerMinute), 0)
         deltaFillLevel = math.max(deltaFillLevel, 0)
     else
         deltaFillLevel = 0
@@ -137,7 +137,7 @@ function grazingAnimals:getGrassAmounts(animalType)
 
     local _, grassArea3 , _ = getDensityMaskedParallelogram(
         fruitId,
-        corners.corner1X, corners.corner1Z, corners.dX1, corners.dZ1, corners.dX2, corners.dZ2,
+        corners.x, corners.z, corners.widthX, corners.widthZ, corners.heightX, corners.heightZ,
         0, g_currentMission.numFruitStateChannels,
         maskId,
         self.MASK_FIRST_CHANNEL,  self.MASK_NUM_CHANNELS)
@@ -146,7 +146,7 @@ function grazingAnimals:getGrassAmounts(animalType)
 
     local _, grassArea2 , _ = getDensityMaskedParallelogram(
         fruitId,
-        corners.corner1X, corners.corner1Z, corners.dX1, corners.dZ1, corners.dX2, corners.dZ2,
+        corners.x, corners.z, corners.widthX, corners.widthZ, corners.heightX, corners.heightZ,
         0, g_currentMission.numFruitStateChannels,
         maskId,
         self.MASK_FIRST_CHANNEL,  self.MASK_NUM_CHANNELS)
@@ -154,7 +154,7 @@ function grazingAnimals:getGrassAmounts(animalType)
     setDensityMaskParams(maskId, "greater", -1)
     setDensityCompareParams(fruitId, "greater", -1)
    
-    return grassArea2 * pixelSize * grassLitersPerSqm * 0.25, grassArea3 * pixelSize * grassLitersPerSqm * 0.25
+    return grassArea2 * pixelSize * grassLitersPerSqm * self.GRASS_MULTIPLIER, grassArea3 * pixelSize * grassLitersPerSqm * self.GRASS_MULTIPLIER
 end
 
 function grazingAnimals:update(dt)
@@ -205,7 +205,7 @@ function grazingAnimals:reduceGrassAmounts(animalType, state)
 
     addDensityMaskedParallelogram(
         fruitId,
-        corners.corner1X, corners.corner1Z, corners.dX1, corners.dZ1, corners.dX2, corners.dZ2,
+        corners.x, corners.z, corners.widthX, corners.widthZ, corners.heightX, corners.heightZ,
         0, g_currentMission.numFruitStateChannels,
         maskId,
         self.MASK_FIRST_CHANNEL,  self.MASK_NUM_CHANNELS,

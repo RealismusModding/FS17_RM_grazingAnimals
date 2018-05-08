@@ -34,10 +34,16 @@ function grazingArea:new(id)
             local corner2Id = getChildAt(corner1Id,0)
             local corner3Id = getChildAt(corner1Id,1)
 
-            grazingArea.areas[animalType] = {}
-            grazingArea.areas[animalType].corner1X, _, grazingArea.areas[animalType].corner1Z = getWorldTranslation(corner1Id)
-            grazingArea.areas[animalType].dX1, _ , grazingArea.areas[animalType].dZ1 = getTranslation(corner2Id)
-            grazingArea.areas[animalType].dX2, _ , grazingArea.areas[animalType].dZ2 = getTranslation(corner3Id)
+            local x0, _, z0 = getWorldTranslation(corner2Id)
+            local x1,_,z1 = getWorldTranslation(corner1Id)
+            local x2,_,z2 = getWorldTranslation(corner3Id)
+
+            grazingArea.areas[animalType].x,
+            grazingArea.areas[animalType].z,
+            grazingArea.areas[animalType].widthX,
+            grazingArea.areas[animalType].widthZ,
+            grazingArea.areas[animalType].heightX,
+            grazingArea.areas[animalType].heightZ = Utils.getXZWidthAndHeight(nil, x0,z0, x1,z1, x2,z2)
         end
     end
 
