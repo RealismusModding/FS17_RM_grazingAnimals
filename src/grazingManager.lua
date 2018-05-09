@@ -86,6 +86,10 @@ function grazingAnimals:manageGrazing(animalType)
     -- finding how much can be filled
     -- leave one day consumption
     self.grassFillLevel[animalType] = g_currentMission.husbandries[animalType]:getFillLevel(FillUtil.FILLTYPE_GRASS_WINDROW)
+    if animalType == "sheep" then
+        self.grassFillLevel["sheep"] = self.grassFillLevel["sheep"] + g_currentMission.husbandries[animalType]:getFillLevel(FillUtil.FILLTYPE_DRYGRASS_WINDROW)
+    end
+
     local deltaFillLevel = math.min((self.grassThroughCapacity[animalType] - grassPerDay) -  self.grassFillLevel[animalType], self.grassAvailable[animalType] - self.consumedGrass[animalType])
     if numAnimals ~= 0 then
         deltaFillLevel = math.max(deltaFillLevel, 0)

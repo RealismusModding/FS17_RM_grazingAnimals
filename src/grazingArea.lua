@@ -33,10 +33,12 @@ function grazingArea:new(id)
             local corner1Id = getChildAt(areaId,0)
             local corner2Id = getChildAt(corner1Id,0)
             local corner3Id = getChildAt(corner1Id,1)
+            
+            grazingArea.areas[animalType] = {}
 
             local x0, _, z0 = getWorldTranslation(corner2Id)
-            local x1,_,z1 = getWorldTranslation(corner1Id)
-            local x2,_,z2 = getWorldTranslation(corner3Id)
+            local x1, _ ,z1 = getWorldTranslation(corner1Id)
+            local x2, _ ,z2 = getWorldTranslation(corner3Id)
 
             grazingArea.areas[animalType].x,
             grazingArea.areas[animalType].z,
