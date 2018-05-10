@@ -109,13 +109,15 @@ function grazingAnimals:manageGrazing(animalType)
     self.consumedGrass[animalType] = self.consumedGrass[animalType] + deltaFillLevel
 
     -- internal grass storage depleted and have been used to fill the through
-    if self.consumedGrass[animalType] > self.grassVolumeStage3[animalType] then
-        self.consumedGrass[animalType] = self.consumedGrass[animalType] - self.grassVolumeStage3[animalType]
-        self:reduceGrassAmounts(animalType, maxState + 1)
+    if self.consumedGrass[animalType] > 0 then
+        if self.consumedGrass[animalType] >= self.grassVolumeStage3[animalType] and self.grassVolumeStage3[animalType] > 0 then
+            self.consumedGrass[animalType] = self.consumedGrass[animalType] - self.grassVolumeStage3[animalType]
+            self:reduceGrassAmounts(animalType, maxState + 1)
 
-    elseif self.consumedGrass[animalType] > self.grassVolumeStage2[animalType] and self.grassVolumeStage3[animalType] == 0 then
-        self.consumedGrass[animalType] = self.consumedGrass[animalType] - self.grassVolumeStage2[animalType]
-        self:reduceGrassAmounts(animalType, maxState)
+        elseif self.consumedGrass[animalType] >= self.grassVolumeStage2[animalType] and self.grassVolumeStage3[animalType] == 0 then
+            self.consumedGrass[animalType] = self.consumedGrass[animalType] - self.grassVolumeStage2[animalType]
+            self:reduceGrassAmounts(animalType, maxState)
+        end
     end
 end
 
