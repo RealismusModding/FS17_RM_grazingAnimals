@@ -30,7 +30,7 @@ Under `<Layers>` include:
     </FoliageMultiLayer>
 
 ## Painting the grass areas in Giants Editor
-After including the above, the grazingCows and grazingSheep foliage layer will be visible under Terrain Editing in GE. Paint the cow and sheep meadows with the respective layers. In order to see the layers on the screen, change viewDistance to a higher value than 0, for instance to 80. Paint grazingCows with channel 0 and grazingSheep with channel 1.
+After including the above, the grazingCows and grazingSheep foliage layer will be visible under Terrain Editing in GE. Paint the cow and sheep meadows with the respective layers. In order to see the layers on the screen, change viewDistance of the FoliageSubLayer to a higher value than 0, for instance to 80. Paint grazingCows with channel 0 and grazingSheep with channel 1. When you're done painting, don't forget to revert to a viewDistance of 0.
 
 ## Creating a transform group to improve performance
 Create a transform group on the root called "grazingAreas". In the next level include two groups called "sheep" and "cow". Within each group there should be a parallelogram (as they are defined for field defs) that encompass the respective painted areas. It is useful to create the parallelograms under the "fields" transformGroup so their visible extent can be seen on screen.
