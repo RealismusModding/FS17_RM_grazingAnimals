@@ -26,12 +26,15 @@
     <l10n>
         <text name="GA_SAVE_FAILED">
             <en>Failed to save settings for grazingAnimals to your savegame.</en>
+            <pl>Nie udało się zapisać ustawień grazingAnimals dla twojego zapisu.</pl>
         </text>
         <text name="GA_COW_PASTURE" >
             <en>Grass in cow pasture: </en>
+            <pl>Trawa na pastwisku krów: </pl>
         </text>
         <text name="GA_SHEEP_PASTURE">
             <en>Grass in sheep pasture: </en>
+            <pl>Trawa na pastwisku owiec: </pl>
         </text>
     </l10n>
 
