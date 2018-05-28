@@ -23,6 +23,12 @@
         <sourceFile filename="src/grazingManager.lua" />
     </extraSourceFiles>
 
+        <credits><![CDATA[
+## Translations
+Polish - Ziuta
+## toggleRenderGrazingAreas.lua script - Ziuta
+]]></credits>
+    
     <l10n>
         <text name="GA_SAVE_FAILED">
             <en>Failed to save settings for grazingAnimals to your savegame.</en>
