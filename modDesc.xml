@@ -27,14 +27,17 @@
         <text name="GA_SAVE_FAILED">
             <en>Failed to save settings for grazingAnimals to your savegame.</en>
             <pl>Nie udało się zapisać ustawień grazingAnimals dla twojego zapisu.</pl>
+            <de>Einstellungen für weidende Tiere konnten nicht in deinem Savegame gespeichert werden.</de>
         </text>
         <text name="GA_COW_PASTURE" >
             <en>Grass in cow pasture: </en>
             <pl>Trawa na pastwisku krów: </pl>
+            <de>Gras in der Kuhweide: </de>
         </text>
         <text name="GA_SHEEP_PASTURE">
             <en>Grass in sheep pasture: </en>
             <pl>Trawa na pastwisku owiec: </pl>
+            <de>Gras in der Schafweide: </de>
         </text>
     </l10n>
 
