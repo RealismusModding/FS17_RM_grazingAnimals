@@ -7,12 +7,14 @@
         <en>Grazing Animals</en>
         <de>Grazing Animals</de>
         <fr>Grazing Animals</fr>
+        <cz>Pastviny</cz>
     </title>
 
     <description>
         <en><![CDATA[Grazing Animals]]></en>
         <de><![CDATA[Grazing Animals]]></de>
         <fr><![CDATA[Grazing Animals]]></fr>
+        <cz><![CDATA[Pastviny]]></cz>
     </description>
 
     <iconFilename>icon.dds</iconFilename>
@@ -28,16 +30,19 @@
             <en>Failed to save settings for grazingAnimals to your savegame.</en>
             <pl>Nie udało się zapisać ustawień grazingAnimals dla twojego zapisu.</pl>
             <de>Einstellungen für weidende Tiere konnten nicht in deinem Savegame gespeichert werden.</de>
+            <cz>Vaše nastavení se nepodařilo uložit.</cz>
         </text>
         <text name="GA_COW_PASTURE" >
             <en>Grass in cow pasture: </en>
             <pl>Trawa na pastwisku krów: </pl>
             <de>Gras in der Kuhweide: </de>
+            <cz>Tráva na kravské pastvině: </cz>
         </text>
         <text name="GA_SHEEP_PASTURE">
             <en>Grass in sheep pasture: </en>
             <pl>Trawa na pastwisku owiec: </pl>
             <de>Gras in der Schafweide: </de>
+            <cz>Tráva na pastvině ovcí: </cz>
         </text>
     </l10n>
 
