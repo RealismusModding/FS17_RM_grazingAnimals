@@ -57,6 +57,10 @@ end
 function grazingAnimals:manageGrazing(animalType)
     local maxState = FruitUtil.fruitIndexToDesc[FruitUtil.FRUITTYPE_GRASS].maxHarvestingGrowthState
 
+    if g_currentMission.husbandries[animalType] == nil then
+        return
+    end
+
     if self.consumedGrass[animalType] == nil then
         self.consumedGrass[animalType] = 0
     end
