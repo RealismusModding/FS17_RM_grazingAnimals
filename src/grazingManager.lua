@@ -58,7 +58,9 @@ end
 
 function grazingAnimals:minuteChanged()
     for animI, animType in pairs(self.animalTypes) do
-        self:manageGrazing(animI, animType)
+        if self.grassVolumeStage2 ~= nil and self.grassVolumeStage3 ~= nil then
+            self:manageGrazing(animI, animType)
+        end
     end
 end
 
