@@ -2,12 +2,12 @@
 <modDesc descVersion="37">
     <author>Realismus Modding</author>
     <contributors>reallogger</contributors>
-    <version>1.0.0.0</version>
+    <version>1.1.0.0</version>
     <title>
         <en>Grazing Animals</en>
         <de>Grazing Animals</de>
         <fr>Grazing Animals</fr>
-        <cz>Pastviny</cz>
+        <cz>Grazing Animals</cz>
     </title>
 
     <description>
@@ -28,6 +28,8 @@
         <credits><![CDATA[
 ## Translations
 Polish - Ziuta
+German - Amadeo, ChocoVanChoco
+Czech - kikislany
 ## toggleRenderGrazingAreas.lua script - Ziuta
 ]]></credits>
     
@@ -51,7 +53,10 @@ Polish - Ziuta
             <cz>Tráva na pastvině ovcí: </cz>
         </text>
         <text name="GA_GRAZINGAREAS_FAILED">
-            <en>[Grazing Animals]: Grazing areas was not loaded, due to erroneous definition. This will result in lag at hour change.</en> 
+            <en>[Grazing Animals]: Grazing areas was not loaded, due to erroneous definition. This will result in lag at hour change.</en>
+            <de>[Grazing Animals]: Grazing areas was not loaded, due to erroneous definition. This will result in lag at hour change.</de>
+            <pl>[Grazing Animals]: Grazing areas was not loaded, due to erroneous definition. This will result in lag at hour change.</pl>
+            <cz>[Grazing Animals]: Grazing areas was not loaded, due to erroneous definition. This will result in lag at hour change.</cz>
         </text>
     </l10n>
 
