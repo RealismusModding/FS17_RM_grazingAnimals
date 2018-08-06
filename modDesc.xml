@@ -25,6 +25,12 @@
         <sourceFile filename="src/grazingManager.lua" />
     </extraSourceFiles>
 
+        <credits><![CDATA[
+## Translations
+Polish - Ziuta
+## toggleRenderGrazingAreas.lua script - Ziuta
+]]></credits>
+    
     <l10n>
         <text name="GA_SAVE_FAILED">
             <en>Failed to save settings for grazingAnimals to your savegame.</en>
@@ -32,7 +38,7 @@
             <pl>Nie udało się zapisać ustawień grazingAnimals dla twojego zapisu.</pl>
             <cz>Vaše nastavení se nepodařilo uložit.</cz>
         </text>
-        <text name="GA_COW_PASTURE" >
+        <text name="GA_COW_PASTURE">
             <en>Grass in cow pasture: </en>
             <de>Gras auf der Kuhweide: </de>
             <pl>Trawa na pastwisku krów: </pl>
@@ -43,6 +49,9 @@
             <de>Gras auf der Schafweide: </de>
             <pl>Trawa na pastwisku owiec: </pl>
             <cz>Tráva na pastvině ovcí: </cz>
+        </text>
+        <text name="GA_GRAZINGAREAS_FAILED">
+            <en>[Grazing Animals]: Grazing areas was not loaded, due to erroneous definition. This will result in lag at hour change.</en> 
         </text>
     </l10n>
 
