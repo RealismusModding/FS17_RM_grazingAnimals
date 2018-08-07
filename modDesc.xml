@@ -55,7 +55,7 @@ Czech - kikislany
         <text name="GA_GRAZINGAREAS_FAILED">
             <en>[Grazing Animals]: Grazing areas was not loaded, due to erroneous definition. This will result in lag at hour change.</en>
             <de>[Grazing Animals]: Grazing areas was not loaded, due to erroneous definition. This will result in lag at hour change.</de>
-            <pl>[Grazing Animals]: Grazing areas was not loaded, due to erroneous definition. This will result in lag at hour change.</pl>
+            <pl>[Grazing Animals]: Obszar pastwiska nie został załadowany z powody błędnego zdefiniowania obszaru na mapie. Będzie to skutkować opóźnieniem na zmiany godzin.</pl>
             <cz>[Grazing Animals]: Grazing areas was not loaded, due to erroneous definition. This will result in lag at hour change.</cz>
         </text>
     </l10n>
