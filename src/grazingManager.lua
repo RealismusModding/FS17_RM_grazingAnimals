@@ -45,22 +45,35 @@ function grazingAnimals:loadMap()
 end
 
 function grazingAnimals:load()
+    self.preparedMap = true
+    for animI, _ in pairs(self.animalTypes) do  
+        local maskId = getTerrainDetailByName(g_currentMission.terrainRootNode, self.foliageTypes[animI])
+        if maskId == 0 then
+            self.preparedMap = false
+        end
+    end
 end
 
 function grazingAnimals:save()
 end
 
 function grazingAnimals:hourChanged()
-    -- update available grass if player has for instance mowed grass in the pasture
-    for animI, animType in pairs(self.animalTypes) do
-        self.grassVolumeStage2[animType], self.grassVolumeStage3[animType] = self:getGrassAmounts(animI, animType)
+    if self.preparedMap then
+        -- update available grass if player has for instance mowed grass in the pasture
+        for animI, animType in pairs(self.animalTypes) do
+            self.grassVolumeStage2[animType], self.grassVolumeStage3[animType] = self:getGrassAmounts(animI, animType)
+        end
     end
 end
 
 function grazingAnimals:minuteChanged()
-    for animI, animType in pairs(self.animalTypes) do
-        if self.grassVolumeStage2 ~= nil and self.grassVolumeStage3 ~= nil then
-            self:manageGrazing(animI, animType)
+    if self.preparedMap then
+        for animI, animType in pairs(self.animalTypes) do
+            local stage2 = table.getn(self.grassVolumeStage2)
+            local stage3 = table.getn(self.grassVolumeStage3)
+            if stage2 > 0 and stage3 > 0 then
+                self:manageGrazing(animI, animType)
+            end
         end
     end
 end
@@ -193,18 +206,20 @@ function grazingAnimals:fallbackGrazingAreas()
 end
 
 function grazingAnimals:update(dt)
-    local x, _, z = getWorldTranslation(g_currentMission.player.rootNode)
+    if self.preparedMap then
+        local x, _, z = getWorldTranslation(g_currentMission.player.rootNode)
 
-    -- get initial amounts of grass in the pasture
-    for animI, animType in pairs(self.animalTypes) do
-        self:initGrass(animI, animType)
+        -- get initial amounts of grass in the pasture
+        for animI, animType in pairs(self.animalTypes) do
+            self:initGrass(animI, animType)
 
-        local maskId = getTerrainDetailByName(g_currentMission.terrainRootNode, self.foliageTypes[animI])
-        local a, _, _ = getDensityParallelogram(maskId, x - 2.5, z - 2.5, 5, 0, 0, 5, self.MASK_FIRST_CHANNEL,  self.MASK_NUM_CHANNELS)
+            local maskId = getTerrainDetailByName(g_currentMission.terrainRootNode, self.foliageTypes[animI])
+            local a, _, _ = getDensityParallelogram(maskId, x - 2.5, z - 2.5, 5, 0, 0, 5, self.MASK_FIRST_CHANNEL,  self.MASK_NUM_CHANNELS)
         
-        if a > 0 then
-            local grassInField = math.max(math.floor(self.grassAvailable[animType] - self.consumedGrass[animType]), 0)
-            g_currentMission:addExtraPrintText(g_i18n:getText("GA_" .. string.upper(animType) .."_PASTURE") .. tostring(grassInField) .. " " .. g_i18n:getText("unit_liter"))
+            if a > 0 then
+                local grassInField = math.max(math.floor(self.grassAvailable[animType] - self.consumedGrass[animType]), 0)
+                g_currentMission:addExtraPrintText(g_i18n:getText("GA_" .. string.upper(animType) .."_PASTURE") .. tostring(grassInField) .. " " .. g_i18n:getText("unit_liter"))
+            end
         end
     end
 end
@@ -253,7 +268,7 @@ function grazingAnimals:draw()
 end
 
 function grazingAnimals.saveToXML(self)
-    if grazingAnimals.enabled and self.isValid and self.xmlKey ~= nil then
+    if grazingAnimals.enabled and self.isValid and self.xmlKey ~= nil and self.preparedMap then
         if self.xmlFile ~= nil then
             for _, animType in pairs(grazingAnimals.animalTypes) do
                 setXMLFloat(self.xmlFile, self.xmlKey .. ".grazingAnimals.consumedGrass." .. animType,  grazingAnimals.consumedGrass[animType])
