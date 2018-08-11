@@ -68,10 +68,11 @@ end
 
 function grazingAnimals:minuteChanged()
     if self.preparedMap then
-        for animI, animType in pairs(self.animalTypes) do
-            local stage2 = table.getn(self.grassVolumeStage2)
-            local stage3 = table.getn(self.grassVolumeStage3)
-            if stage2 > 0 and stage3 > 0 then
+        local stage2 = table.getn(self.grassVolumeStage2)
+        local stage3 = table.getn(self.grassVolumeStage3)
+
+        if stage2 > 0 and stage3 > 0 then        
+            for animI, animType in pairs(self.animalTypes) do
                 self:manageGrazing(animI, animType)
             end
         end
