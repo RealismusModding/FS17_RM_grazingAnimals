@@ -218,7 +218,7 @@ function grazingAnimals:update(dt)
 
             local maskId = getTerrainDetailByName(g_currentMission.terrainRootNode, self.foliageTypes[animI])
             local a, _, _ = getDensityParallelogram(maskId, x - 2.5, z - 2.5, 5, 0, 0, 5, self.MASK_FIRST_CHANNEL,  self.MASK_NUM_CHANNELS)
-            
+
             if a > 0 then
                 local grassInField = math.max(math.floor(self.grassAvailable[animType] - self.consumedGrass[animType]), 0)
                 g_currentMission:addExtraPrintText(g_i18n:getText("GA_" .. string.upper(animType) .."_PASTURE") .. tostring(grassInField) .. " " .. g_i18n:getText("unit_liter"))
@@ -303,5 +303,8 @@ function grazingAnimals.loadFromXML()
 end
 
 addModEventListener(grazingAnimals)
+<<<<<<< HEAD
 
 FSBaseMission.loadMapFinished = Utils.prependedFunction(FSBaseMission.loadMapFinished, grazingAnimals.loadFromXML)
+=======
+>>>>>>> 345a771815341ccdb2babf0019aada6eb2c6a669
