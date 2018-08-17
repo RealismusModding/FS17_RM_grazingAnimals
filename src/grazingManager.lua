@@ -303,8 +303,5 @@ function grazingAnimals.loadFromXML()
 end
 
 addModEventListener(grazingAnimals)
-<<<<<<< HEAD
 
 FSBaseMission.loadMapFinished = Utils.prependedFunction(FSBaseMission.loadMapFinished, grazingAnimals.loadFromXML)
-=======
->>>>>>> 345a771815341ccdb2babf0019aada6eb2c6a669
