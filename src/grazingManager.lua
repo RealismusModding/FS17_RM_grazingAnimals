@@ -15,6 +15,7 @@ grazingAnimals.MASK_NUM_CHANNELS = 1
 -- add or remove animal types in the following tables
 grazingAnimals.animalTypes = {"cow", "sheep"}
 grazingAnimals.foliageTypes = {"grazingCows", "grazingSheep"}
+grazingAnimals.consumedGrass = {}
 
 grazingAnimals.GRASS_MULTIPLIER = 0.25 -- 0.25 gives approximately the same amount as if you would mow the grass area.
 
@@ -22,7 +23,6 @@ local modItem = ModsUtil.findModItemByModName(g_currentModName)
 grazingAnimals.modDir = g_currentModDirectory
 
 function grazingAnimals:loadMap()
-    FSBaseMission.loadMapFinished = Utils.prependedFunction(FSBaseMission.loadMapFinished, grazingAnimals.loadFromXML)
     FSCareerMissionInfo.saveToXML = Utils.appendedFunction(FSCareerMissionInfo.saveToXML, grazingAnimals.saveToXML)
 
     g_currentMission.environment:addMinuteChangeListener(self)
@@ -32,11 +32,10 @@ function grazingAnimals:loadMap()
 
     self.grassThroughCapacity = {}
     self.grassFillLevel = {}
-    self.consumedGrass = {}
+    
     for _, animType in pairs(self.animalTypes) do
         self.grassThroughCapacity[animType] = 0
         self.grassFillLevel[animType] = 0
-        self.consumedGrass[animType] = 0
     end
 
     self.grassAvailable = {}
@@ -304,3 +303,5 @@ function grazingAnimals.loadFromXML()
 end
 
 addModEventListener(grazingAnimals)
+
+FSBaseMission.loadMapFinished = Utils.prependedFunction(FSBaseMission.loadMapFinished, grazingAnimals.loadFromXML)
