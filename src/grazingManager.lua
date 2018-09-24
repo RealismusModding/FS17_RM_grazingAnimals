@@ -256,6 +256,8 @@ function grazingAnimals:reduceGrassAmounts(animI, animalType, state)
 
     setDensityCompareParams(fruitId, "greater", -1)
     setDensityMaskParams(maskId, "greater", -1)
+
+    self:getGrassAmounts(animI, animalType)
 end
 
 function grazingAnimals:deleteMap()
