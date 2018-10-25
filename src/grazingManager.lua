@@ -32,10 +32,12 @@ function grazingAnimals:loadMap()
 
     self.grassThroughCapacity = {}
     self.grassFillLevel = {}
+    self.showPastureInfo = {}
     
     for _, animType in pairs(self.animalTypes) do
         self.grassThroughCapacity[animType] = 0
         self.grassFillLevel[animType] = 0
+        self.showPastureInfo[animType] = false
     end
 
     self.grassAvailable = {}
@@ -43,6 +45,8 @@ function grazingAnimals:loadMap()
     self.grassVolumeStage3 = {}
 
     self.initMap = false
+
+    self.lastUpdate = math.floor(g_currentMission.environment.dayTime / 1000) -- in seconds
 end
 
 function grazingAnimals:load()
@@ -52,7 +56,7 @@ function grazingAnimals:save()
 end
 
 function grazingAnimals:hourChanged()
-    if self.preparedMap then
+    if self.preparedMap and g_currentMission:getIsServer() then
         -- update available grass if player has for instance mowed grass in the pasture
         for animI, animType in pairs(self.animalTypes) do
             self.grassVolumeStage2[animType], self.grassVolumeStage3[animType] = self:getGrassAmounts(animI, animType)
@@ -61,7 +65,7 @@ function grazingAnimals:hourChanged()
 end
 
 function grazingAnimals:minuteChanged()
-    if self.preparedMap then
+    if self.preparedMap and g_currentMission:getIsServer() then
         for animI, animType in pairs(self.animalTypes) do
             if self.grassVolumeStage2[animType] ~= nil and self.grassVolumeStage3[animType]  ~= nil then
                 self:manageGrazing(animI, animType)
@@ -75,6 +79,10 @@ function grazingAnimals:manageGrazing(animI, animalType)
 
     if g_currentMission.husbandries[animalType] == nil then
         return
+    end
+
+    if self.consumedGrass[animalType] == nil then
+        self.consumedGrass[animalType] = 0
     end
 
     if self.grassVolumeStage3[animalType] > 0 then
@@ -209,7 +217,10 @@ function grazingAnimals:update(dt)
         self.initMap = true
     end
 
-    if self.preparedMap then
+    -- only update every five seconds
+    local currentSeconds = math.floor(g_currentMission.environment.dayTime / 1000)
+    if currentSeconds > self.lastUpdate + 5 and self.preparedMap then
+        self.lastUpdate = currentSeconds
         local x, _, z = getWorldTranslation(g_currentMission.player.rootNode)
 
         -- get initial amounts of grass in the pasture
@@ -220,9 +231,17 @@ function grazingAnimals:update(dt)
             local a, _, _ = getDensityParallelogram(maskId, x - 2.5, z - 2.5, 5, 0, 0, 5, self.MASK_FIRST_CHANNEL,  self.MASK_NUM_CHANNELS)
 
             if a > 0 then
-                local grassInField = math.max(math.floor(self.grassAvailable[animType] - self.consumedGrass[animType]), 0)
-                g_currentMission:addExtraPrintText(g_i18n:getText("GA_" .. string.upper(animType) .."_PASTURE") .. tostring(grassInField) .. " " .. g_i18n:getText("unit_liter"))
+                self.showPastureInfo[animType] = true
+            else
+                self.showPastureInfo[animType] = false
             end
+        end
+    end
+
+    for _, animType in pairs(self.animalTypes) do
+        if self.showPastureInfo[animType] and self.preparedMap then
+            local grassInField = math.max(math.floor(self.grassAvailable[animType] - self.consumedGrass[animType]), 0)
+            g_currentMission:addExtraPrintText(g_i18n:getText("GA_" .. string.upper(animType) .."_PASTURE") .. tostring(grassInField) .. " " .. g_i18n:getText("unit_liter"))
         end
     end
 end
@@ -302,6 +321,50 @@ function grazingAnimals.loadFromXML()
             grazingAnimals.consumedGrass[animType] = 0
         end
     end
+end
+
+function print_r(t)
+    local print_r_cache = {}
+    local function sub_print_r(t, indent)
+        if (print_r_cache[tostring(t)]) then
+            print(indent .. "*" .. tostring(t))
+        else
+            print_r_cache[tostring(t)] = true
+            if (type(t) == "table") then
+                for pos, val in pairs(t) do
+                    pos = tostring(pos)
+                    if (type(val) == "table") then
+                        print(indent .. "[" .. pos .. "] => " .. tostring(t) .. " {")
+                        sub_print_r(val, indent .. string.rep(" ", string.len(pos) + 8))
+                        print(indent .. string.rep(" ", string.len(pos) + 6) .. "}")
+                    elseif (type(val) == "string") then
+                        print(indent .. "[" .. pos .. '] => "' .. val .. '"')
+                    else
+                        print(indent .. "[" .. pos .. "] => " .. tostring(val))
+                    end
+                end
+            else
+                print(indent .. tostring(t))
+            end
+        end
+    end
+
+    if (type(t) == "table") then
+        print(tostring(t) .. " {")
+        sub_print_r(t, "  ")
+        print("}")
+    else
+        sub_print_r(t, "  ")
+    end
+    print()
+end
+
+function logInfo(...)
+    local str = "[GrazingAnimals]"
+    for i = 1, select("#", ...) do
+        str = str .. " " .. tostring(select(i, ...))
+    end
+    print(str)
 end
 
 addModEventListener(grazingAnimals)
