@@ -81,10 +81,6 @@ function grazingAnimals:manageGrazing(animI, animalType)
         return
     end
 
-    if self.consumedGrass[animalType] == nil then
-        self.consumedGrass[animalType] = 0
-    end
-
     if self.grassVolumeStage3[animalType] > 0 then
         self.grassAvailable[animalType] = self.grassVolumeStage3[animalType] * 2 + self.grassVolumeStage2[animalType]
     elseif self.grassVolumeStage2[animalType] > 0 then
@@ -217,16 +213,18 @@ function grazingAnimals:update(dt)
         self.initMap = true
     end
 
+    -- get initial amounts of grass in the pasture
+    for animI, animType in pairs(self.animalTypes) do
+        self:initGrass(animI, animType)
+    end
+
     -- only update every five seconds
     local currentSeconds = math.floor(g_currentMission.environment.dayTime / 1000)
     if currentSeconds > self.lastUpdate + 5 and self.preparedMap then
         self.lastUpdate = currentSeconds
         local x, _, z = getWorldTranslation(g_currentMission.player.rootNode)
 
-        -- get initial amounts of grass in the pasture
         for animI, animType in pairs(self.animalTypes) do
-            self:initGrass(animI, animType)
-
             local maskId = getTerrainDetailByName(g_currentMission.terrainRootNode, self.foliageTypes[animI])
             local a, _, _ = getDensityParallelogram(maskId, x - 2.5, z - 2.5, 5, 0, 0, 5, self.MASK_FIRST_CHANNEL,  self.MASK_NUM_CHANNELS)
 
@@ -239,7 +237,7 @@ function grazingAnimals:update(dt)
     end
 
     for _, animType in pairs(self.animalTypes) do
-        if self.showPastureInfo[animType] and self.preparedMap then
+        if self.showPastureInfo[animType] and self.preparedMap and self.grassAvailable[animType] ~= nil and self.consumedGrass[animType] ~= nil then
             local grassInField = math.max(math.floor(self.grassAvailable[animType] - self.consumedGrass[animType]), 0)
             g_currentMission:addExtraPrintText(g_i18n:getText("GA_" .. string.upper(animType) .."_PASTURE") .. tostring(grassInField) .. " " .. g_i18n:getText("unit_liter"))
         end
@@ -250,6 +248,10 @@ function grazingAnimals:initGrass(animI, animalType)
     if self.grassAvailable[animalType] == nil then
         self.grassAvailable[animalType] = 0
         self.grassVolumeStage2[animalType], self.grassVolumeStage3[animalType] = self:getGrassAmounts(animI, animalType)
+    end
+
+    if self.consumedGrass[animalType] == nil then
+        self.consumedGrass[animalType] = 0
     end
 end
 
